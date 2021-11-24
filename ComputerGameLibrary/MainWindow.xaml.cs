@@ -23,6 +23,7 @@ namespace ComputerGameLibrary
         public MainWindow()
         {
             InitializeComponent();
+            testbox.Text = "TESTTESTTEST";
         }
     }
 }
