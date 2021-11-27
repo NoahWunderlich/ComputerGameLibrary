@@ -5,8 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ComputerGameLibrary"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <TextBlock x:Name="testbox"/>
+        Title="GameList" Height="450" Width="800">
+    <Grid Background="black" >
+
+        <TabControl TabStripPlacement="Left" Background="LightGray" BorderBrush="Black" BorderThickness="2">
+            <TabItem Header="Allgemeine &#x0a;Liste" Height="100" Background="DarkGray" BorderBrush="Black">
+                <StackPanel>
+                    <TextBlock x:Name="testbox1"/>
+                    <TextBlock x:Name="testbox2"/>
+                    <TextBlock x:Name="testbox3"/>
+                    <TextBlock x:Name="testbox4"/>
+                    <TextBlock x:Name="testbox5"/>
+
+                    <ListBox>
+                        
+                    </ListBox>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="Eigene &#x0a;Liste            " Height="100" Background="DarkGray" BorderBrush="Black">
+            </TabItem>
+            <TabItem Header="Öffnen&#x0a;Exportieren " Height="100" Background="DarkGray" BorderBrush="Black">
+            </TabItem>
+            <TabItem Header="???" Height="100" Background="DarkGray" BorderBrush="Black">
+            </TabItem>
+        </TabControl>
+      
+        
+        
     </Grid>
 </Window>

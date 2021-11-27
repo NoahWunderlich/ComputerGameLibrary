@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +24,27 @@ namespace ComputerGameLibrary
         public MainWindow()
         {
             InitializeComponent();
-            testbox.Text = "TESTTESTTEST";
+            readList();
+        }
+        void readList()
+        {
+            string[] readArr = File.ReadAllLines(@"C:\Users\NOAH-WUNDERLICH\source\repos\ComputerGameLibrary\ComputerGameLibrary\video_games.csv");
+
+            foreach (String readline in readArr.Skip(1))
+            {
+                var temp = readline.Replace("\"", "");
+                string[] line = temp.Split(',');
+                testbox1.Text = line[0];
+                testbox2.Text = line[line.Length - 24];
+                testbox3.Text = line[line.Length - 29]; // genre
+                testbox4.Text = line.Length.ToString();
+                Game game = new Game();
+                game.Name = line[0];
+                game.Platform = line[line.Length - 24];
+                game.Publisher = line[line.Length - 26];
+
+            }
+
         }
     }
 }
