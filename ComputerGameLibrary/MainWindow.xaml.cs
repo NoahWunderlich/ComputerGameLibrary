@@ -35,14 +35,28 @@ namespace ComputerGameLibrary
                 var temp = readline.Replace("\"", "");
                 string[] line = temp.Split(',');
                 testbox1.Text = line[0];
-                testbox2.Text = line[line.Length - 24];
+                testbox2.Text = line.Length.ToString();
                 testbox3.Text = line[line.Length - 29]; // genre
                 testbox4.Text = line.Length.ToString();
+
+                
                 Game game = new Game();
+
+                if (line.Length < 36)
+                {
+                    string[] arr = new string[line.Length - 36];
+                    for(int i = 0; i< line.Length-36; i++)
+                    {
+                        arr[i] = line[6+i];
+                    }
+                    game.Genres = arr;
+                }
+
                 game.Name = line[0];
                 game.Platform = line[line.Length - 24];
                 game.Publisher = line[line.Length - 26];
 
+                ListBoxAll.Items.Add(game);
             }
 
         }

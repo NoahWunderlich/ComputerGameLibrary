@@ -10,15 +10,37 @@
 
         <TabControl TabStripPlacement="Left" Background="LightGray" BorderBrush="Black" BorderThickness="2">
             <TabItem Header="Allgemeine &#x0a;Liste" Height="100" Background="DarkGray" BorderBrush="Black">
+                
                 <StackPanel>
+                    <WrapPanel>
+                        <Label Content="Genre"/>
+                        <ComboBox x:Name="Genre"/>
+                        <Label Content="Platform"/>
+                        <ComboBox x:Name="Platform"/>
+                        <Label Content="Online"/>
+                        <CheckBox x:Name="OnlineCheckBox"/>
+                    </WrapPanel>
+                   
                     <TextBlock x:Name="testbox1"/>
                     <TextBlock x:Name="testbox2"/>
                     <TextBlock x:Name="testbox3"/>
                     <TextBlock x:Name="testbox4"/>
                     <TextBlock x:Name="testbox5"/>
 
-                    <ListBox>
-                        
+                    <ListBox x:Name="ListBoxAll"   Height="300" Margin="5" Background="LightGray">
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                    <Run Text="Name = "/>
+                    <Run Text="{Binding Path=Name}" /><LineBreak/>
+                    <Run Text="Platform = "/>
+                    <Run Text="{Binding Path=Platform}" /><LineBreak/>
+                    <Run Text="Genre = "/>
+                    <Run Text="{Binding Path=Genre}" x:Name="FilePath" />
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
                 </StackPanel>
             </TabItem>
