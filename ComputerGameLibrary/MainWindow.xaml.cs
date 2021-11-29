@@ -28,36 +28,29 @@ namespace ComputerGameLibrary
         }
         void readList()
         {
-            string[] readArr = File.ReadAllLines(@"C:\Users\NOAH-WUNDERLICH\source\repos\ComputerGameLibrary\ComputerGameLibrary\video_games.csv");
+            string[] readArr = File.ReadAllLines(@"C:\Users\NOAH-WUNDERLICH\source\repos\ComputerGameLibrary\ComputerGameLibrary\all_games.csv");
 
             foreach (String readline in readArr.Skip(1))
             {
                 var temp = readline.Replace("\"", "");
                 string[] line = temp.Split(',');
-                testbox1.Text = line[0];
-                testbox2.Text = line.Length.ToString();
-                testbox3.Text = line[line.Length - 29]; // genre
-                testbox4.Text = line.Length.ToString();
 
-                
                 Game game = new Game();
-
-                if (line.Length < 36)
-                {
-                    string[] arr = new string[line.Length - 36];
-                    for(int i = 0; i< line.Length-36; i++)
-                    {
-                        arr[i] = line[6+i];
-                    }
-                    game.Genres = arr;
-                }
-
                 game.Name = line[0];
-                game.Platform = line[line.Length - 24];
-                game.Publisher = line[line.Length - 26];
+                game.Platform = line[1];
+                game.ReleaseDate = line[2];
+                game.ReleaseYear = line[3];
+                game.MetaScore = Int32.Parse(line[line.Length - 2]);
+                game.UserReview = Double.Parse(line[line.Length-1]);
 
-                ListBoxAll.Items.Add(game);
+
+                DataGridAll.Items.Add(game);
             }
+
+        }
+
+        private void OnClickAllDataButton(object sender, RoutedEventArgs e)
+        {
 
         }
     }

@@ -6,54 +6,34 @@
         xmlns:local="clr-namespace:ComputerGameLibrary"
         mc:Ignorable="d"
         Title="GameList" Height="450" Width="800">
-    <Grid Background="black" >
+    <Grid Background="LightGray" >
 
-        <TabControl TabStripPlacement="Left" Background="LightGray" BorderBrush="Black" BorderThickness="2">
-            <TabItem Header="Allgemeine &#x0a;Liste" Height="100" Background="DarkGray" BorderBrush="Black">
-                
-                <StackPanel>
-                    <WrapPanel>
-                        <Label Content="Genre"/>
-                        <ComboBox x:Name="Genre"/>
-                        <Label Content="Platform"/>
-                        <ComboBox x:Name="Platform"/>
-                        <Label Content="Online"/>
-                        <CheckBox x:Name="OnlineCheckBox"/>
-                    </WrapPanel>
-                   
-                    <TextBlock x:Name="testbox1"/>
-                    <TextBlock x:Name="testbox2"/>
-                    <TextBlock x:Name="testbox3"/>
-                    <TextBlock x:Name="testbox4"/>
-                    <TextBlock x:Name="testbox5"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.15*"/>
+            <RowDefinition Height="0.9*"/>
+        </Grid.RowDefinitions>
 
-                    <ListBox x:Name="ListBoxAll"   Height="300" Margin="5" Background="LightGray">
+        <Label Content="HEADER" Grid.Row="0"/>
+        <WrapPanel Grid.Row="1">
+                <Label Content="Genre"/>
+                <ComboBox x:Name="Genre"/>
+                <Label Content="Platform"/>
+                <ComboBox x:Name="Platform"/>
+                <Label Content="Contains"/>
+                <TextBox Width="100" />
+                <Button Content="Apply filter" Click="OnClickAllDataButton"/>
 
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock>
-                    <Run Text="Name = "/>
-                    <Run Text="{Binding Path=Name}" /><LineBreak/>
-                    <Run Text="Platform = "/>
-                    <Run Text="{Binding Path=Platform}" /><LineBreak/>
-                    <Run Text="Genre = "/>
-                    <Run Text="{Binding Path=Genre}" x:Name="FilePath" />
-                                </TextBlock>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </StackPanel>
-            </TabItem>
+            </WrapPanel>
+        <DataGrid Name="DataGridAll" AutoGenerateColumns="False" Grid.Row="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name"  Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Platform" Binding="{Binding Platform}" />
+                <DataGridTextColumn Header="Release Date" Binding="{Binding ReleaseDate}" />
+                <DataGridTextColumn Header="Summary" Binding="{Binding Summary}" />
 
-            <TabItem Header="Eigene &#x0a;Liste            " Height="100" Background="DarkGray" BorderBrush="Black">
-            </TabItem>
-            <TabItem Header="Öffnen&#x0a;Exportieren " Height="100" Background="DarkGray" BorderBrush="Black">
-            </TabItem>
-            <TabItem Header="???" Height="100" Background="DarkGray" BorderBrush="Black">
-            </TabItem>
-        </TabControl>
-      
-        
-        
+            </DataGrid.Columns>
+        </DataGrid>
+    
     </Grid>
 </Window>
