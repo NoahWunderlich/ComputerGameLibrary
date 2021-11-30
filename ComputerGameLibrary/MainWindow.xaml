@@ -13,8 +13,18 @@
             <RowDefinition Height="0.15*"/>
             <RowDefinition Height="0.9*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0.25*"/>
+            
+        </Grid.ColumnDefinitions>
 
+        <WrapPanel Grid.Row="0"  Grid.Column="0" x:Name="Wrap">
         <Label Content="HEADER" Grid.Row="0"/>
+        <Button Content="All List"/>
+        <Button Content="Own List"/>
+        </WrapPanel>
+        <StackPanel Grid.RowSpan="3" Grid.Column="1" x:Name="StackpanelGame"/>
         <WrapPanel Grid.Row="1">
                 <Label Content="Genre"/>
                 <ComboBox x:Name="Genre"/>
@@ -23,14 +33,22 @@
                 <Label Content="Contains"/>
                 <TextBox Width="100" />
                 <Button Content="Apply filter" Click="OnClickAllDataButton"/>
+            <Button Click="OnFileClick" >
+                <WrapPanel >
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8E5;" VerticalAlignment="Center"/>
+                    <TextBlock Text="Datei Einladen"/>
+                </WrapPanel>
+            </Button>
 
-            </WrapPanel>
-        <DataGrid Name="DataGridAll" AutoGenerateColumns="False" Grid.Row="2">
+        </WrapPanel>
+        <DataGrid Name="DataGridAll" Grid.Row="2" SelectionChanged="OnSelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name"  Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Platform" Binding="{Binding Platform}" />
-                <DataGridTextColumn Header="Release Date" Binding="{Binding ReleaseDate}" />
-                <DataGridTextColumn Header="Summary" Binding="{Binding Summary}" />
+                <DataGridTextColumn Header="Release Year" Binding="{Binding ReleaseYear}" />
+                <DataGridTextColumn Header="User Review" Binding="{Binding UserReview}" />
+                <DataGridTextColumn Header="Meta Score" Binding="{Binding MetaScore}" />
+                <DataGridTextColumn Header="Summary" Binding="{Binding Summary}" Width="450"/>
 
             </DataGrid.Columns>
         </DataGrid>

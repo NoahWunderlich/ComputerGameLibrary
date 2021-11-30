@@ -14,7 +14,7 @@ namespace ComputerGameLibrary
         public string Genre { get; set; }
         public string ReleaseDate { get; set; }
         public string ReleaseYear { get; set; }
-        public double UserReview { get; set; }
+        public string UserReview { get; set; }
         public int MetaScore  { get; set; }
 
     }

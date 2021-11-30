@@ -41,8 +41,15 @@ namespace ComputerGameLibrary
                 game.ReleaseDate = line[2];
                 game.ReleaseYear = line[3];
                 game.MetaScore = Int32.Parse(line[line.Length - 2]);
-                game.UserReview = Double.Parse(line[line.Length-1]);
+                game.UserReview = line[line.Length-1];
 
+                string summary = "";
+
+                for(int i = 4; i< line.Length - 2; i++)
+                {
+                    summary += line[i];
+                }
+                game.Summary = summary;
 
                 DataGridAll.Items.Add(game);
             }
