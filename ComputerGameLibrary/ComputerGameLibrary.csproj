@@ -88,6 +88,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="all_games.csv" />
+    <None Include="own_games.csv" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -99,6 +100,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="SCCT.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bf2cover.jpg" />
+    <Resource Include="gta4cover.jpg" />
+    <Resource Include="scctcover.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ComputerGameLibrary"
         mc:Ignorable="d"
         Title="GameList" Height="450" Width="800">
+    
     <Grid Background="LightGray" >
 
         <Grid.RowDefinitions>
@@ -21,10 +22,24 @@
 
         <WrapPanel Grid.Row="0"  Grid.Column="0" x:Name="Wrap">
         <Label Content="HEADER" Grid.Row="0"/>
-        <Button Content="All List"/>
-        <Button Content="Own List"/>
+        <Button Content="All List" Click="OnClickAll" x:Name="BtnAll"/>
+            <Button Content="Own List" Click="OnClickOwn" x:Name="BtnOwn"/>
         </WrapPanel>
-        <StackPanel Grid.RowSpan="3" Grid.Column="1" x:Name="StackpanelGame"/>
+        <StackPanel Grid.RowSpan="3" Grid.Column="1" x:Name="StackpanelGame">
+            <Image Source="/SCCT.png" Width="100" Height="150"/>
+            <Label x:Name="LabelName" Content="Name"/>
+            <Label x:Name="LabelGenre" Content="Genre"/>
+            <Label x:Name="LabelDate" Content="Date"/>
+
+            <TextBlock x:Name="TextBlockSummary"  Text="Summary" Width="auto" Height="140" TextWrapping="Wrap"  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+         ScrollViewer.VerticalScrollBarVisibility="Auto"
+         ScrollViewer.CanContentScroll="True" />
+            
+                <TextBox x:Name="OwnReview" Text="Add a comment to your own List" Height="30"/>
+            <Button Content="Add to personal List" Click="OnClickAddReview"/>
+
+
+        </StackPanel>
         <WrapPanel Grid.Row="1">
                 <Label Content="Genre"/>
                 <ComboBox x:Name="Genre"/>
@@ -32,23 +47,23 @@
                 <ComboBox x:Name="Platform"/>
                 <Label Content="Contains"/>
                 <TextBox Width="100" />
-                <Button Content="Apply filter" Click="OnClickAllDataButton"/>
-            <Button Click="OnFileClick" >
+                <Button Content="Apply filter" Click="ApplyFilter"/>
+            <Button Click="OnFileClick" x:Name="BtnLoadList" >
                 <WrapPanel >
                     <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8E5;" VerticalAlignment="Center"/>
-                    <TextBlock Text="Datei Einladen"/>
+                    <TextBlock Text="Liste auswählen" />
                 </WrapPanel>
             </Button>
 
         </WrapPanel>
-        <DataGrid Name="DataGridAll" Grid.Row="2" SelectionChanged="OnSelectionChanged">
+        <DataGrid Name="DataGrid" Grid.Row="2" SelectionChanged="OnSelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name"  Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Platform" Binding="{Binding Platform}" />
-                <DataGridTextColumn Header="Release Year" Binding="{Binding ReleaseYear}" />
-                <DataGridTextColumn Header="User Review" Binding="{Binding UserReview}" />
-                <DataGridTextColumn Header="Meta Score" Binding="{Binding MetaScore}" />
-                <DataGridTextColumn Header="Summary" Binding="{Binding Summary}" Width="450"/>
+                <DataGridTextColumn Header="Name"  Binding="{Binding Name}" Width="200"/>
+                <DataGridTextColumn Header="Platform" Binding="{Binding Platform}" Width="100" />
+                <DataGridTextColumn Header="Year" Binding="{Binding ReleaseYear}" Width="50"/>
+                <DataGridTextColumn Header="User&#x0a;Review" Binding="{Binding UserReview}" Width="50"/>
+                <DataGridTextColumn Header="Meta&#x0a;Score" Binding="{Binding MetaScore}" Width="50" />
+                <DataGridTextColumn Header="Summary" Binding="{Binding Summary}" Width="200"/>
 
             </DataGrid.Columns>
         </DataGrid>

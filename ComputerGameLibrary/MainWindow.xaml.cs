@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace ComputerGameLibrary
         {
             InitializeComponent();
             readList();
+            BtnLoadList.Visibility = Visibility.Hidden;
         }
         void readList()
         {
@@ -42,6 +44,7 @@ namespace ComputerGameLibrary
                 game.ReleaseYear = line[3];
                 game.MetaScore = Int32.Parse(line[line.Length - 2]);
                 game.UserReview = line[line.Length-1];
+                game.RawLine = temp;
 
                 string summary = "";
 
@@ -51,12 +54,60 @@ namespace ComputerGameLibrary
                 }
                 game.Summary = summary;
 
-                DataGridAll.Items.Add(game);
+                DataGrid.Items.Add(game);
             }
 
         }
 
-        private void OnClickAllDataButton(object sender, RoutedEventArgs e)
+        private void OnFileClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+
+            if (dialog.ShowDialog(this) == true)
+            {
+                readOwnList(dialog.FileName);
+            }
+            else
+            {
+                readOwnList(@"C:\Users\NOAH-WUNDERLICH\source\repos\ComputerGameLibrary\ComputerGameLibrary\own_games.csv");
+            }
+            // für alle fälle
+            
+
+        }
+
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Game game = (Game)DataGrid.SelectedItem;
+            LabelName.Content = game.Name;
+            TextBlockSummary.Text = game.Summary;
+            LabelDate.Content = game.ReleaseDate + " " + game.ReleaseYear;
+        }
+
+        public void OnClickAll(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnClickOwn(object sender, RoutedEventArgs e)
+        {
+            BtnLoadList.Visibility = Visibility.Visible;
+            readOwnList(@"C:\Users\NOAH-WUNDERLICH\source\repos\ComputerGameLibrary\ComputerGameLibrary\own_games.csv");
+
+        }
+
+        void readOwnList(string filepath)
+        {
+
+
+        }
+
+        private void ApplyFilter(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnClickAddReview(object sender, RoutedEventArgs e)
         {
 
         }
