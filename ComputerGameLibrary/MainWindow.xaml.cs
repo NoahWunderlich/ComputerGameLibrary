@@ -34,31 +34,38 @@ namespace ComputerGameLibrary
 
             foreach (String readline in readArr.Skip(1))
             {
-                var temp = readline.Replace("\"", "");
-                string[] line = temp.Split(',');
+               
 
-                Game game = new Game();
-                game.Name = line[0];
-                game.Platform = line[1];
-                game.ReleaseDate = line[2];
-                game.ReleaseYear = line[3];
-                game.MetaScore = Int32.Parse(line[line.Length - 2]);
-                game.UserReview = line[line.Length-1];
-                game.RawLine = temp;
 
-                string summary = "";
-
-                for(int i = 4; i< line.Length - 2; i++)
-                {
-                    summary += line[i];
-                }
-                game.Summary = summary;
-
-                DataGrid.Items.Add(game);
+                DataGrid.Items.Add(LineToGame(readline));
             }
 
         }
 
+        private Game LineToGame(string str)
+        {
+            var temp = str.Replace("\"", "");
+            string[] line = temp.Split(',');
+
+            Game game = new Game();
+            game.Name = line[0];
+            game.Platform = line[1];
+            game.ReleaseDate = line[2];
+            game.ReleaseYear = line[3];
+            game.MetaScore = Int32.Parse(line[line.Length - 2]);
+            game.UserReview = line[line.Length - 1];
+            game.RawLine = temp;
+
+            string summary = "";
+
+            for (int i = 4; i < line.Length - 2; i++)
+            {
+                summary += line[i];
+            }
+            game.Summary = summary;
+
+            return game;
+        }
         private void OnFileClick(object sender, RoutedEventArgs e)
         {
             var dialog = new OpenFileDialog();
@@ -109,6 +116,13 @@ namespace ComputerGameLibrary
 
         private void OnClickAddReview(object sender, RoutedEventArgs e)
         {
+            Game game = (Game)DataGrid.SelectedItem;
+            //game.RawLine += "," + OwnReview.Text;
+            string[] arr = new string[2];
+
+            arr[0] = game.RawLine;
+            arr[1] = OwnReview.Text;
+            File.AppendAllLines(@"C:\Users\NOAH-WUNDERLICH\source\repos\ComputerGameLibrary\ComputerGameLibrary\own_games.csv", arr);
 
         }
     }

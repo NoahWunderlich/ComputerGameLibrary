@@ -16,14 +16,13 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="0.25*"/>
+            <ColumnDefinition Width="0.5*"/>
             
         </Grid.ColumnDefinitions>
 
-        <WrapPanel Grid.Row="0"  Grid.Column="0" x:Name="Wrap">
-        <Label Content="HEADER" Grid.Row="0"/>
-        <Button Content="All List" Click="OnClickAll" x:Name="BtnAll"/>
-            <Button Content="Own List" Click="OnClickOwn" x:Name="BtnOwn"/>
+        <WrapPanel Grid.Row="0"  Grid.Column="0" x:Name="Wrap" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Button Content="All List" Click="OnClickAll" x:Name="BtnAll" Width="264" Height="35" Background="Black" Foreground="White"/>
+            <Button Content="Own List" Click="OnClickOwn" x:Name="BtnOwn" Width="264" Height="35" Background="Black" Foreground="White"/>
         </WrapPanel>
         <StackPanel Grid.RowSpan="3" Grid.Column="1" x:Name="StackpanelGame">
             <Image Source="/SCCT.png" Width="100" Height="150"/>
@@ -58,12 +57,11 @@
         </WrapPanel>
         <DataGrid Name="DataGrid" Grid.Row="2" SelectionChanged="OnSelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name"  Binding="{Binding Name}" Width="200"/>
-                <DataGridTextColumn Header="Platform" Binding="{Binding Platform}" Width="100" />
+                <DataGridTextColumn Header="Name"  Binding="{Binding Name}" Width="250"/>
+                <DataGridTextColumn Header="Platform" Binding="{Binding Platform}" Width="125" />
                 <DataGridTextColumn Header="Year" Binding="{Binding ReleaseYear}" Width="50"/>
                 <DataGridTextColumn Header="User&#x0a;Review" Binding="{Binding UserReview}" Width="50"/>
                 <DataGridTextColumn Header="Meta&#x0a;Score" Binding="{Binding MetaScore}" Width="50" />
-                <DataGridTextColumn Header="Summary" Binding="{Binding Summary}" Width="200"/>
 
             </DataGrid.Columns>
         </DataGrid>
