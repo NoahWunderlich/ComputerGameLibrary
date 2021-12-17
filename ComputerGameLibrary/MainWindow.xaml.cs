@@ -28,19 +28,58 @@ namespace ComputerGameLibrary
             readList();
             BtnLoadList.Visibility = Visibility.Hidden;
         }
+        void LoadFilters()
+        {
+            List<string> genreList = new List<string>();
+            List<string> platformList = new List<string>();
+
+            foreach (Game game in DataGrid.Items)
+            {
+                if (!genreList.Contains(game.Genre))
+                {
+                    genreList.Add(game.Genre);
+                }
+                if (!platformList.Contains(game.Platform))
+                {
+                    platformList.Add(game.Platform);
+                }
+            }
+            Platform.ItemsSource = platformList;
+            Genre.ItemsSource = genreList;
+            Platform.SelectedIndex = 0;
+            Genre.SelectedIndex = 0;
+        }
         void readList()
         {
+            DataGrid.Items.Clear();
             string[] readArr = File.ReadAllLines(@"C:\Users\NOAH-WUNDERLICH\source\repos\ComputerGameLibrary\ComputerGameLibrary\all_games.csv");
 
             foreach (String readline in readArr.Skip(1))
             {
-               
-
 
                 DataGrid.Items.Add(LineToGame(readline));
             }
+            LoadFilters();
 
         }
+
+        void readOwnList(string filepath)
+        {
+            DataGrid.Items.Clear();
+            string[] readArr = File.ReadAllLines(filepath);
+
+            for (int i = 0; i <= readArr.Length - 2; i += 2)
+            {
+                Game game = LineToGame(readArr[i]);
+                string[] nextline = readArr[i+1].Split(';');
+                game.OwnReview = nextline[0];
+                game.OwnScore = Double.Parse(nextline[1]);
+                DataGrid.Items.Add(game);
+            }
+            LoadFilters();
+
+        }
+
 
         private Game LineToGame(string str)
         {
@@ -93,7 +132,7 @@ namespace ComputerGameLibrary
 
         public void OnClickAll(object sender, RoutedEventArgs e)
         {
-
+            readList();
         }
 
         private void OnClickOwn(object sender, RoutedEventArgs e)
@@ -103,12 +142,7 @@ namespace ComputerGameLibrary
 
         }
 
-        void readOwnList(string filepath)
-        {
-
-
-        }
-
+      
         private void ApplyFilter(object sender, RoutedEventArgs e)
         {
 
@@ -125,5 +159,19 @@ namespace ComputerGameLibrary
             File.AppendAllLines(@"C:\Users\NOAH-WUNDERLICH\source\repos\ComputerGameLibrary\ComputerGameLibrary\own_games.csv", arr);
 
         }
+
+        private void OnTextBoxContains(object sender, TextChangedEventArgs e)
+        {
+            readList();
+            //TextBoxContains.Text;
+            foreach (Game game in DataGrid.Items)
+            {
+                if (!game.RawLine.Contains(TextBoxContains.Text))
+                {
+                    DataGrid.Items.Remove(game);
+                }
+            }
+
+            }
     }
 }

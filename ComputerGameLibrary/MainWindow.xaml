@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ComputerGameLibrary"
         mc:Ignorable="d"
-        Title="GameList" Height="450" Width="800">
+        Title="GameList" Height="600" Width="1000">
     
     <Grid Background="LightGray" >
 
@@ -30,7 +30,7 @@
             <Label x:Name="LabelGenre" Content="Genre"/>
             <Label x:Name="LabelDate" Content="Date"/>
 
-            <TextBlock x:Name="TextBlockSummary"  Text="Summary" Width="auto" Height="140" TextWrapping="Wrap"  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+            <TextBlock x:Name="TextBlockSummary"  Text=" Summary" Width="auto" Height="140" TextWrapping="Wrap"  ScrollViewer.HorizontalScrollBarVisibility="Auto"
          ScrollViewer.VerticalScrollBarVisibility="Auto"
          ScrollViewer.CanContentScroll="True" />
             
@@ -41,11 +41,11 @@
         </StackPanel>
         <WrapPanel Grid.Row="1">
                 <Label Content="Genre"/>
-                <ComboBox x:Name="Genre"/>
-                <Label Content="Platform"/>
+            <ComboBox x:Name="Genre"/>
+            <Label Content="Platform"/>
                 <ComboBox x:Name="Platform"/>
                 <Label Content="Contains"/>
-                <TextBox Width="100" />
+                <TextBox Width="100" x:Name="TextBoxContains" TextChanged="OnTextBoxContains"/>
                 <Button Content="Apply filter" Click="ApplyFilter"/>
             <Button Click="OnFileClick" x:Name="BtnLoadList" >
                 <WrapPanel >
