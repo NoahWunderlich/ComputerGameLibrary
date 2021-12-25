@@ -11,12 +11,12 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="0.1*"/>
-            <RowDefinition Height="0.15*"/>
+            <RowDefinition Height="0.25*"/>
             <RowDefinition Height="0.9*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.35*"/>
             
         </Grid.ColumnDefinitions>
 
@@ -29,32 +29,64 @@
             <Label x:Name="LabelName" Content="Name"/>
             <Label x:Name="LabelGenre" Content="Genre"/>
             <Label x:Name="LabelDate" Content="Date"/>
-
-            <TextBlock x:Name="TextBlockSummary"  Text=" Summary" Width="auto" Height="140" TextWrapping="Wrap"  ScrollViewer.HorizontalScrollBarVisibility="Auto"
-         ScrollViewer.VerticalScrollBarVisibility="Auto"
-         ScrollViewer.CanContentScroll="True" />
-            
-                <TextBox x:Name="OwnReview" Text="Add a comment to your own List" Height="30"/>
-            <Button Content="Add to personal List" Click="OnClickAddReview"/>
+            <ScrollViewer>
+            <TextBlock x:Name="TextBlockSummary"  Text=" Summary" Width="auto" Height="200" TextWrapping="Wrap" />
+                </ScrollViewer>
+            <StackPanel x:Name="OwnListOptions">
+                <Label Content="Personal Review:"/>
+            <ScrollViewer>
+                <TextBlock x:Name="TextBlockPersonalReview"  Width="auto" Height="100" TextWrapping="Wrap" />
+            </ScrollViewer>
+            </StackPanel>
+            <StackPanel x:Name="AllListOptions">
+                <Label  Content="Add a Text and a Score from 1-100 for your own list"/>
+                <TextBox x:Name="TextBoxOwnReview" Height="50"/>
+                <TextBox x:Name="TextBoxOwnScore" Width="50"/>
+                <Button Click="OnClickAddToOwn" Content="Add to personal list"/>
+            </StackPanel>
 
 
         </StackPanel>
-        <WrapPanel Grid.Row="1">
+        <StackPanel Grid.Row="1" >
+            <WrapPanel Margin="5">
                 <Label Content="Genre"/>
-            <ComboBox x:Name="Genre"/>
-            <Label Content="Platform"/>
-                <ComboBox x:Name="Platform"/>
+            <ComboBox x:Name="Genre" Width="100"/>
+            <Label Content="Platform" />
+            <ComboBox x:Name="Platform" Width="100"/>
                 <Label Content="Contains"/>
                 <TextBox Width="100" x:Name="TextBoxContains" TextChanged="OnTextBoxContains"/>
                 <Button Content="Apply filter" Click="ApplyFilter"/>
+            <Button Content="Clear filter" Click="ClearFilter"/>
+            </WrapPanel>
+            <WrapPanel Margin="5">
             <Button Click="OnFileClick" x:Name="BtnLoadList" >
                 <WrapPanel >
                     <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8E5;" VerticalAlignment="Center"/>
-                    <TextBlock Text="Liste auswählen" />
+                    <TextBlock Text="Import List" />
                 </WrapPanel>
             </Button>
-
-        </WrapPanel>
+            
+            <Button Click="OnFileClick" x:Name="Btnexport" >
+                <WrapPanel >
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8E5;" VerticalAlignment="Center"/>
+                    <TextBlock Text="Export List" />
+                </WrapPanel>
+            </Button>
+            </WrapPanel>
+           
+            <WrapPanel Margin="5" x:Name="AddGamePanel">
+            <Label Content="Add new Game:"/>
+                <Label Content="Name:"/>
+            <TextBox Width="100" x:Name="NewGameName"/>
+                <Label Content="Genre:"/>
+                <TextBox Width="100" x:Name="NewGameGenre"/>
+                <Label Content="Summary:"/>
+                <TextBox Width="100" x:Name="NewGameSummary"/>
+                <Label Content="ReleaseDate"/>
+                <TextBox Width="50" x:Name="NewGameRelease"/>
+                <Button Content="Add" Click="AddNewGame"/>
+            </WrapPanel>
+        </StackPanel>
         <DataGrid Name="DataGrid" Grid.Row="2" SelectionChanged="OnSelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name"  Binding="{Binding Name}" Width="250"/>
@@ -62,7 +94,7 @@
                 <DataGridTextColumn Header="Year" Binding="{Binding ReleaseYear}" Width="50"/>
                 <DataGridTextColumn Header="User&#x0a;Review" Binding="{Binding UserReview}" Width="50"/>
                 <DataGridTextColumn Header="Meta&#x0a;Score" Binding="{Binding MetaScore}" Width="50" />
-
+                <DataGridTextColumn Header="Personal Score" Binding="{Binding OwnScore}" Width="50" />
             </DataGrid.Columns>
         </DataGrid>
     

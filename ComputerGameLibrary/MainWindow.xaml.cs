@@ -26,13 +26,12 @@ namespace ComputerGameLibrary
         {
             InitializeComponent();
             readList();
-            BtnLoadList.Visibility = Visibility.Hidden;
         }
         void LoadFilters()
         {
             List<string> genreList = new List<string>();
             List<string> platformList = new List<string>();
-
+            platformList.Add("");
             foreach (Game game in DataGrid.Items)
             {
                 if (!genreList.Contains(game.Genre))
@@ -51,6 +50,11 @@ namespace ComputerGameLibrary
         }
         void readList()
         {
+            AddGamePanel.Visibility = Visibility.Visible;
+            OwnListOptions.Visibility = Visibility.Collapsed;
+            AllListOptions.Visibility = Visibility.Visible;
+
+
             DataGrid.Items.Clear();
             string[] readArr = File.ReadAllLines(@"C:\Users\NOAH-WUNDERLICH\source\repos\ComputerGameLibrary\ComputerGameLibrary\all_games.csv");
 
@@ -65,15 +69,27 @@ namespace ComputerGameLibrary
 
         void readOwnList(string filepath)
         {
+           
+            AllListOptions.Visibility = Visibility.Collapsed;
+            AddGamePanel.Visibility = Visibility.Hidden;
+            OwnListOptions.Visibility = Visibility.Visible;
+
             DataGrid.Items.Clear();
             string[] readArr = File.ReadAllLines(filepath);
 
             for (int i = 0; i <= readArr.Length - 2; i += 2)
             {
                 Game game = LineToGame(readArr[i]);
-                string[] nextline = readArr[i+1].Split(';');
-                game.OwnReview = nextline[0];
-                game.OwnScore = Double.Parse(nextline[1]);
+                string[] nextline = readArr[i+1].Split(',');
+
+                game.OwnScore = int.Parse(nextline[nextline.Length-1]);
+
+                for (int j = 0; j<nextline.Length-1; j++)
+                {
+                    game.OwnReview += nextline[j];
+                }
+
+                
                 DataGrid.Items.Add(game);
             }
             LoadFilters();
@@ -124,20 +140,31 @@ namespace ComputerGameLibrary
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Game game = (Game)DataGrid.SelectedItem;
-            LabelName.Content = game.Name;
-            TextBlockSummary.Text = game.Summary;
-            LabelDate.Content = game.ReleaseDate + " " + game.ReleaseYear;
+            if (DataGrid.SelectedItem != null)
+            {
+
+                Game game = (Game)DataGrid.SelectedItem;
+                LabelName.Content = game.Name;
+                TextBlockSummary.Text = game.Summary;
+                LabelDate.Content = game.ReleaseDate + " " + game.ReleaseYear;
+
+                if (game.OwnReview != null)
+                {
+                    TextBlockPersonalReview.Text = game.OwnReview;
+                }
+            }
         }
 
         public void OnClickAll(object sender, RoutedEventArgs e)
         {
+
             readList();
+
         }
 
         private void OnClickOwn(object sender, RoutedEventArgs e)
         {
-            BtnLoadList.Visibility = Visibility.Visible;
+            DataGrid.SelectedItem = null;
             readOwnList(@"C:\Users\NOAH-WUNDERLICH\source\repos\ComputerGameLibrary\ComputerGameLibrary\own_games.csv");
 
         }
@@ -145,33 +172,53 @@ namespace ComputerGameLibrary
       
         private void ApplyFilter(object sender, RoutedEventArgs e)
         {
+            readList();
 
-        }
+            List<Game> removeGames = new List<Game>();
+            foreach (Game game in DataGrid.Items)
+            {
+                if (!game.Summary.Contains(TextBoxContains.Text.ToString()))
+                {
+                    removeGames.Add(game);
+                }
+            }
+            foreach(Game g in removeGames)
+            {
+                DataGrid.Items.Remove(g);
+            }
+
+        
+    }
 
         private void OnClickAddReview(object sender, RoutedEventArgs e)
         {
             Game game = (Game)DataGrid.SelectedItem;
-            //game.RawLine += "," + OwnReview.Text;
             string[] arr = new string[2];
-
+            if(Int32.Parse(TextBoxOwnScore.ToString()) <= 100 && Int32.Parse(TextBoxOwnScore.ToString()) >= 0) {
             arr[0] = game.RawLine;
-            arr[1] = OwnReview.Text;
+            arr[1] = TextBoxOwnReview.Text + "," + TextBoxOwnScore;
             File.AppendAllLines(@"C:\Users\NOAH-WUNDERLICH\source\repos\ComputerGameLibrary\ComputerGameLibrary\own_games.csv", arr);
-
+            }
         }
 
         private void OnTextBoxContains(object sender, TextChangedEventArgs e)
         {
-            readList();
-            //TextBoxContains.Text;
-            foreach (Game game in DataGrid.Items)
-            {
-                if (!game.RawLine.Contains(TextBoxContains.Text))
-                {
-                    DataGrid.Items.Remove(game);
-                }
-            }
 
-            }
+        }
+
+        private void ClearFilter(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddNewGame(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnClickAddToOwn(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

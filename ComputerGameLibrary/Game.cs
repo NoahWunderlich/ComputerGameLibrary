@@ -18,7 +18,8 @@ namespace ComputerGameLibrary
         public int MetaScore  { get; set; }
         public string RawLine { get; set; }
         public string OwnReview { get; set; }
-        public double OwnScore { get; set; }
+        public int OwnScore { get; set; }
+        public double CoverSource { get; set; }
 
     }
 }
