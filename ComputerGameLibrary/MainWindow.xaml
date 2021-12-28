@@ -94,7 +94,7 @@
                 <DataGridTextColumn Header="Year" Binding="{Binding ReleaseYear}" Width="50"/>
                 <DataGridTextColumn Header="User&#x0a;Review" Binding="{Binding UserReview}" Width="50"/>
                 <DataGridTextColumn Header="Meta&#x0a;Score" Binding="{Binding MetaScore}" Width="50" />
-                <DataGridTextColumn Header="Personal Score" Binding="{Binding OwnScore}" Width="50" />
+                <DataGridTextColumn x:Name="DataGridPersonalScore" Header="Personal Score" Binding="{Binding OwnScore}" Width="50" />
             </DataGrid.Columns>
         </DataGrid>
     

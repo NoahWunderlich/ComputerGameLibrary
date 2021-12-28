@@ -50,6 +50,7 @@ namespace ComputerGameLibrary
         }
         void readList()
         {
+            DataGridPersonalScore.Visibility = Visibility.Collapsed;
             AddGamePanel.Visibility = Visibility.Visible;
             OwnListOptions.Visibility = Visibility.Collapsed;
             AllListOptions.Visibility = Visibility.Visible;
@@ -69,7 +70,7 @@ namespace ComputerGameLibrary
 
         void readOwnList(string filepath)
         {
-           
+            DataGridPersonalScore.Visibility = Visibility.Visible;
             AllListOptions.Visibility = Visibility.Collapsed;
             AddGamePanel.Visibility = Visibility.Hidden;
             OwnListOptions.Visibility = Visibility.Visible;
@@ -89,7 +90,7 @@ namespace ComputerGameLibrary
                     game.OwnReview += nextline[j];
                 }
 
-                
+
                 DataGrid.Items.Add(game);
             }
             LoadFilters();
@@ -157,9 +158,8 @@ namespace ComputerGameLibrary
 
         public void OnClickAll(object sender, RoutedEventArgs e)
         {
-
             readList();
-
+            
         }
 
         private void OnClickOwn(object sender, RoutedEventArgs e)
@@ -192,13 +192,7 @@ namespace ComputerGameLibrary
 
         private void OnClickAddReview(object sender, RoutedEventArgs e)
         {
-            Game game = (Game)DataGrid.SelectedItem;
-            string[] arr = new string[2];
-            if(Int32.Parse(TextBoxOwnScore.ToString()) <= 100 && Int32.Parse(TextBoxOwnScore.ToString()) >= 0) {
-            arr[0] = game.RawLine;
-            arr[1] = TextBoxOwnReview.Text + "," + TextBoxOwnScore;
-            File.AppendAllLines(@"C:\Users\NOAH-WUNDERLICH\source\repos\ComputerGameLibrary\ComputerGameLibrary\own_games.csv", arr);
-            }
+
         }
 
         private void OnTextBoxContains(object sender, TextChangedEventArgs e)
@@ -218,6 +212,14 @@ namespace ComputerGameLibrary
 
         private void OnClickAddToOwn(object sender, RoutedEventArgs e)
         {
+            Game game = (Game)DataGrid.SelectedItem;
+            string[] arr = new string[2];
+            if (Int32.Parse(TextBoxOwnScore.Text) <= 100 && Int32.Parse(TextBoxOwnScore.Text) >= 0)
+            {
+                arr[0] = game.RawLine;
+                arr[1] = TextBoxOwnReview.Text + "," + TextBoxOwnScore.Text;
+                File.AppendAllLines(@"C:\Users\NOAH-WUNDERLICH\source\repos\ComputerGameLibrary\ComputerGameLibrary\own_games.csv", arr);
+            }
 
         }
     }
