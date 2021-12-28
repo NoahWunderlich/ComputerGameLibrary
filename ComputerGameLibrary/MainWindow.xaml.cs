@@ -22,6 +22,8 @@ namespace ComputerGameLibrary
     /// </summary>
     public partial class MainWindow : Window
     {
+        string AllListSource = @"C:\Users\NOAH-WUNDERLICH\source\repos\ComputerGameLibrary\ComputerGameLibrary\all_games.csv";
+        string OwnListSource = @"C:\Users\NOAH-WUNDERLICH\source\repos\ComputerGameLibrary\ComputerGameLibrary\own_games.csv";
         public MainWindow()
         {
             InitializeComponent();
@@ -57,7 +59,7 @@ namespace ComputerGameLibrary
 
 
             DataGrid.Items.Clear();
-            string[] readArr = File.ReadAllLines(@"C:\Users\NOAH-WUNDERLICH\source\repos\ComputerGameLibrary\ComputerGameLibrary\all_games.csv");
+            string[] readArr = File.ReadAllLines(AllListSource);
 
             foreach (String readline in readArr.Skip(1))
             {
@@ -122,7 +124,7 @@ namespace ComputerGameLibrary
 
             return game;
         }
-        private void OnFileClick(object sender, RoutedEventArgs e)
+        private void OnFileImportClick(object sender, RoutedEventArgs e)
         {
             var dialog = new OpenFileDialog();
 
@@ -132,7 +134,7 @@ namespace ComputerGameLibrary
             }
             else
             {
-                readOwnList(@"C:\Users\NOAH-WUNDERLICH\source\repos\ComputerGameLibrary\ComputerGameLibrary\own_games.csv");
+                readOwnList(OwnListSource);
             }
             // für alle fälle
             
@@ -207,7 +209,19 @@ namespace ComputerGameLibrary
 
         private void AddNewGame(object sender, RoutedEventArgs e)
         {
+            Game game = new Game();
 
+            game.Name = NewGameName.Text;
+            game.Genre = NewGameGenre.Text;
+            game.Platform = NewGamePlatform.Text ;
+            game.ReleaseDate = NewGameRelease.Text ;
+            game.ReleaseYear = NewGameReleaseYear.Text;
+            game.MetaScore = Int32.Parse(NewGameMetaScore.Text);
+            game.UserReview = NewGameUserReview.Text;
+            game.Summary = NewGameSummary.Text;
+            game.RawLine = game.Name +","+ game.Platform +"," + game.ReleaseDate +"," + game.Summary +"," +  game.MetaScore+"," +game.UserReview ; //name,platform,release_date,summary,meta_score,user_review
+
+            File.AppendAllText(AllListSource, game.RawLine);
         }
 
         private void OnClickAddToOwn(object sender, RoutedEventArgs e)
@@ -218,7 +232,23 @@ namespace ComputerGameLibrary
             {
                 arr[0] = game.RawLine;
                 arr[1] = TextBoxOwnReview.Text + "," + TextBoxOwnScore.Text;
-                File.AppendAllLines(@"C:\Users\NOAH-WUNDERLICH\source\repos\ComputerGameLibrary\ComputerGameLibrary\own_games.csv", arr);
+                File.AppendAllLines(AllListSource, arr);
+            }
+
+        }
+
+        private void OnFileExportClick(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
+            dialog.FilterIndex = 2;
+            dialog.Title = "Export your personal list";
+            //System.IO.FileStream stream = (System.IO.FileStream)dialog.OpenFile();
+
+            if (dialog.ShowDialog() == DialogResult)
+            {
+                string newDirectory = dialog.FileName;
+                System.IO.File.Copy(OwnListSource, newDirectory);
             }
 
         }

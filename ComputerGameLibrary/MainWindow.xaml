@@ -48,7 +48,7 @@
 
         </StackPanel>
         <StackPanel Grid.Row="1" >
-            <WrapPanel Margin="5">
+            <WrapPanel Margin="2">
                 <Label Content="Genre"/>
             <ComboBox x:Name="Genre" Width="100"/>
             <Label Content="Platform" />
@@ -58,15 +58,15 @@
                 <Button Content="Apply filter" Click="ApplyFilter"/>
             <Button Content="Clear filter" Click="ClearFilter"/>
             </WrapPanel>
-            <WrapPanel Margin="5">
-            <Button Click="OnFileClick" x:Name="BtnLoadList" >
+            <WrapPanel Margin="2">
+            <Button Click="OnFileImportClick" x:Name="BtnLoadList" >
                 <WrapPanel >
                     <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8E5;" VerticalAlignment="Center"/>
                     <TextBlock Text="Import List" />
                 </WrapPanel>
             </Button>
             
-            <Button Click="OnFileClick" x:Name="Btnexport" >
+            <Button Click="OnFileExportClick" x:Name="Btnexport" >
                 <WrapPanel >
                     <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8E5;" VerticalAlignment="Center"/>
                     <TextBlock Text="Export List" />
@@ -74,16 +74,24 @@
             </Button>
             </WrapPanel>
            
-            <WrapPanel Margin="5" x:Name="AddGamePanel">
-            <Label Content="Add new Game:"/>
+            <WrapPanel Margin="1" x:Name="AddGamePanel">
+            <Label Content="New Game:"/>
                 <Label Content="Name:"/>
             <TextBox Width="100" x:Name="NewGameName"/>
                 <Label Content="Genre:"/>
                 <TextBox Width="100" x:Name="NewGameGenre"/>
+                <Label Content="Platform:"/>
+                <TextBox Width="100" x:Name="NewGamePlatform"/>
                 <Label Content="Summary:"/>
                 <TextBox Width="100" x:Name="NewGameSummary"/>
                 <Label Content="ReleaseDate"/>
                 <TextBox Width="50" x:Name="NewGameRelease"/>
+                <Label Content="ReleaseYear"/>
+                <TextBox Width="50" x:Name="NewGameReleaseYear"/>
+                <Label Content="MetaScore"/>
+                <TextBox Width="50" x:Name="NewGameMetaScore"/>
+                <Label Content="UserReview"/>
+                <TextBox Width="50" x:Name="NewGameUserReview"/>
                 <Button Content="Add" Click="AddNewGame"/>
             </WrapPanel>
         </StackPanel>
