@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ComputerGameLibrary
 {
-    class Game
+    public class Game
     {
         public string Name { get; set; }
         public string Platform { get; set; }
@@ -19,7 +19,7 @@ namespace ComputerGameLibrary
         public string RawLine { get; set; }
         public string OwnReview { get; set; }
         public int OwnScore { get; set; }
-        public double CoverSource { get; set; }
+        public string CoverSource { get; set; }
 
     }
 }

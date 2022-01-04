@@ -29,101 +29,7 @@ namespace ComputerGameLibrary
             InitializeComponent();
             readList();
         }
-        void LoadFilters()
-        {
-            List<string> genreList = new List<string>();
-            List<string> platformList = new List<string>();
-            platformList.Add("");
-            foreach (Game game in DataGrid.Items)
-            {
-                if (!genreList.Contains(game.Genre))
-                {
-                    genreList.Add(game.Genre);
-                }
-                if (!platformList.Contains(game.Platform))
-                {
-                    platformList.Add(game.Platform);
-                }
-            }
-            Platform.ItemsSource = platformList;
-            Genre.ItemsSource = genreList;
-            Platform.SelectedIndex = 0;
-            Genre.SelectedIndex = 0;
-        }
-        void readList()
-        {
-            DataGridPersonalScore.Visibility = Visibility.Collapsed;
-            AddGamePanel.Visibility = Visibility.Visible;
-            OwnListOptions.Visibility = Visibility.Collapsed;
-            AllListOptions.Visibility = Visibility.Visible;
-
-
-            DataGrid.Items.Clear();
-            string[] readArr = File.ReadAllLines(AllListSource);
-
-            foreach (String readline in readArr.Skip(1))
-            {
-
-                DataGrid.Items.Add(LineToGame(readline));
-            }
-            LoadFilters();
-
-        }
-
-        void readOwnList(string filepath)
-        {
-            DataGridPersonalScore.Visibility = Visibility.Visible;
-            AllListOptions.Visibility = Visibility.Collapsed;
-            AddGamePanel.Visibility = Visibility.Hidden;
-            OwnListOptions.Visibility = Visibility.Visible;
-
-            DataGrid.Items.Clear();
-            string[] readArr = File.ReadAllLines(filepath);
-
-            for (int i = 0; i <= readArr.Length - 2; i += 2)
-            {
-                Game game = LineToGame(readArr[i]);
-                string[] nextline = readArr[i+1].Split(',');
-
-                game.OwnScore = int.Parse(nextline[nextline.Length-1]);
-
-                for (int j = 0; j<nextline.Length-1; j++)
-                {
-                    game.OwnReview += nextline[j];
-                }
-
-
-                DataGrid.Items.Add(game);
-            }
-            LoadFilters();
-
-        }
-
-
-        private Game LineToGame(string str)
-        {
-            var temp = str.Replace("\"", "");
-            string[] line = temp.Split(',');
-
-            Game game = new Game();
-            game.Name = line[0];
-            game.Platform = line[1];
-            game.ReleaseDate = line[2];
-            game.ReleaseYear = line[3];
-            game.MetaScore = Int32.Parse(line[line.Length - 2]);
-            game.UserReview = line[line.Length - 1];
-            game.RawLine = temp;
-
-            string summary = "";
-
-            for (int i = 4; i < line.Length - 2; i++)
-            {
-                summary += line[i];
-            }
-            game.Summary = summary;
-
-            return game;
-        }
+        
         private void OnFileImportClick(object sender, RoutedEventArgs e)
         {
             var dialog = new OpenFileDialog();
@@ -167,7 +73,7 @@ namespace ComputerGameLibrary
         private void OnClickOwn(object sender, RoutedEventArgs e)
         {
             DataGrid.SelectedItem = null;
-            readOwnList(@"C:\Users\NOAH-WUNDERLICH\source\repos\ComputerGameLibrary\ComputerGameLibrary\own_games.csv");
+            readOwnList(OwnListSource);
 
         }
 
@@ -250,6 +156,104 @@ namespace ComputerGameLibrary
                 string newDirectory = dialog.FileName;
                 System.IO.File.Copy(OwnListSource, newDirectory);
             }
+
+        }
+
+        public void readOwnList(string filepath)
+        {
+            DataGridPersonalScore.Visibility = Visibility.Visible;
+            AllListOptions.Visibility = Visibility.Collapsed;
+            AddGamePanel.Visibility = Visibility.Hidden;
+            OwnListOptions.Visibility = Visibility.Visible;
+
+            DataGrid.Items.Clear();
+            string[] readArr = File.ReadAllLines(filepath);
+
+            for (int i = 0; i <= readArr.Length - 2; i += 2)
+            {
+                Game game = LineToGame(readArr[i]);
+                string[] nextline = readArr[i + 1].Split(',');
+
+                game.OwnScore = int.Parse(nextline[nextline.Length - 1]);
+
+                for (int j = 0; j < nextline.Length - 1; j++)
+                {
+                    game.OwnReview += nextline[j];
+                }
+
+
+                DataGrid.Items.Add(game);
+            }
+            LoadFilters();
+
+        }
+        void readList()
+        {
+            DataGridPersonalScore.Visibility = Visibility.Collapsed;
+            AddGamePanel.Visibility = Visibility.Visible;
+            OwnListOptions.Visibility = Visibility.Collapsed;
+            AllListOptions.Visibility = Visibility.Visible;
+
+
+            DataGrid.Items.Clear();
+            string[] readArr = File.ReadAllLines(AllListSource);
+
+            foreach (String readline in readArr.Skip(1))
+            {
+
+                DataGrid.Items.Add(LineToGame(readline));
+            }
+            LoadFilters();
+
+        }
+        void LoadFilters()
+        {
+            List<string> genreList = new List<string>();
+            List<string> platformList = new List<string>();
+            platformList.Add("");
+            foreach (Game game in DataGrid.Items)
+            {
+                if (!genreList.Contains(game.Genre))
+                {
+                    genreList.Add(game.Genre);
+                }
+                if (!platformList.Contains(game.Platform))
+                {
+                    platformList.Add(game.Platform);
+                }
+            }
+            Platform.ItemsSource = platformList;
+            Genre.ItemsSource = genreList;
+            Platform.SelectedIndex = 0;
+            Genre.SelectedIndex = 0;
+        }
+        public Game LineToGame(string str)
+        {
+            var temp = str.Replace("\"", "");
+            string[] line = temp.Split(',');
+
+            Game game = new Game();
+            game.Name = line[0];
+            game.Platform = line[1];
+            game.ReleaseDate = line[2];
+            game.ReleaseYear = line[3];
+            game.MetaScore = Int32.Parse(line[line.Length - 2]);
+            game.UserReview = line[line.Length - 1];
+            game.RawLine = temp;
+
+            string summary = "";
+
+            for (int i = 4; i < line.Length - 2; i++)
+            {
+                summary += line[i];
+            }
+            game.Summary = summary;
+
+            return game;
+        }
+
+        private void ScrollViewer_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
+        {
 
         }
     }

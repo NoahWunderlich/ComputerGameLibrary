@@ -29,13 +29,14 @@
             <Label x:Name="LabelName" Content="Name"/>
             <Label x:Name="LabelGenre" Content="Genre"/>
             <Label x:Name="LabelDate" Content="Date"/>
-            <ScrollViewer>
-            <TextBlock x:Name="TextBlockSummary"  Text=" Summary" Width="auto" Height="200" TextWrapping="Wrap" />
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="200">
+                
+            <TextBlock x:Name="TextBlockSummary"  Text=" Summary" Width="auto"  TextWrapping="Wrap"   />
                 </ScrollViewer>
             <StackPanel x:Name="OwnListOptions">
                 <Label Content="Personal Review:"/>
-            <ScrollViewer>
-                <TextBlock x:Name="TextBlockPersonalReview"  Width="auto" Height="100" TextWrapping="Wrap" />
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="100">
+                <TextBlock x:Name="TextBlockPersonalReview"  Width="auto" TextWrapping="Wrap" />
             </ScrollViewer>
             </StackPanel>
             <StackPanel x:Name="AllListOptions">
@@ -95,7 +96,7 @@
                 <Button Content="Add" Click="AddNewGame"/>
             </WrapPanel>
         </StackPanel>
-        <DataGrid Name="DataGrid" Grid.Row="2" SelectionChanged="OnSelectionChanged">
+        <DataGrid Name="DataGrid" Grid.Row="2" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name"  Binding="{Binding Name}" Width="250"/>
                 <DataGridTextColumn Header="Platform" Binding="{Binding Platform}" Width="125" />
