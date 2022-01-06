@@ -20,6 +20,9 @@ namespace ComputerGameLibrary
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
     /// </summary>
+    /// 
+
+
     public partial class MainWindow : Window
     {
         string AllListSource = @"C:\Users\NOAH-WUNDERLICH\source\repos\ComputerGameLibrary\ComputerGameLibrary\all_games.csv";
@@ -27,28 +30,32 @@ namespace ComputerGameLibrary
         public MainWindow()
         {
             InitializeComponent();
+
+            // Die Liste wird jeweils einmal für die Anfangsdarstellung geladen
             readList();
         }
         
         private void OnFileImportClick(object sender, RoutedEventArgs e)
         {
+            // Ein Filepicker gibt die möglichkeit die Quelle der persönlichen Liste zu ändern, diese wird dann aufgerufen
             var dialog = new OpenFileDialog();
 
             if (dialog.ShowDialog(this) == true)
             {
+                OwnListSource = dialog.FileName;
                 readOwnList(dialog.FileName);
             }
             else
             {
                 readOwnList(OwnListSource);
             }
-            // für alle fälle
             
 
         }
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // Wird ein Element in dem DataGrid ausgewählt, werden die Eigenschaften des Games in der rechten Fensterseite angezeigt
             if (DataGrid.SelectedItem != null)
             {
 
@@ -66,12 +73,14 @@ namespace ComputerGameLibrary
 
         public void OnClickAll(object sender, RoutedEventArgs e)
         {
+            // Normale Liste allers Games wird aufgerufen
             readList();
             
         }
 
         private void OnClickOwn(object sender, RoutedEventArgs e)
         {
+            // Eigene Liste wird aufgerufen
             DataGrid.SelectedItem = null;
             readOwnList(OwnListSource);
 
@@ -80,14 +89,17 @@ namespace ComputerGameLibrary
       
         private void ApplyFilter(object sender, RoutedEventArgs e)
         {
+            // Wenn der Filter angewandt wird, werden Spiele, welche gewisse Eigenschaften nicht aufweisen, aus der Liste gelöscht
             readList();
 
             List<Game> removeGames = new List<Game>();
             foreach (Game game in DataGrid.Items)
             {
-                if (!game.Summary.Contains(TextBoxContains.Text.ToString()))
+                if (!game.RawLine.Contains(TextBoxContains.Text.ToString()) || (Platform.Text != "" && game.Platform != Platform.Text))
                 {
-                    removeGames.Add(game);
+
+                        removeGames.Add(game);
+                    
                 }
             }
             foreach(Game g in removeGames)
@@ -106,6 +118,8 @@ namespace ComputerGameLibrary
 
         private void AddNewGame(object sender, RoutedEventArgs e)
         {
+            // Das Game wird mithilfe der Daten der Textfenster erstellt, sowie am Ende für die .csv codiert
+
             Game game = new Game();
 
             game.Name = NewGameName.Text;
@@ -123,6 +137,8 @@ namespace ComputerGameLibrary
 
         private void OnClickAddToOwn(object sender, RoutedEventArgs e)
         {
+            // Game Wird zu eigener Liste hinzugefügt, hier wird das Kommentar und Rating in der nachfolgenden Zeile gespeichert
+
             Game game = (Game)DataGrid.SelectedItem;
             string[] arr = new string[2];
             if (Int32.Parse(TextBoxOwnScore.Text) <= 100 && Int32.Parse(TextBoxOwnScore.Text) >= 0)
@@ -136,11 +152,12 @@ namespace ComputerGameLibrary
 
         private void OnFileExportClick(object sender, RoutedEventArgs e)
         {
+            // Die eigene Liste wird an den ausgewählten Ort gespeichert
+
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
             dialog.FilterIndex = 2;
             dialog.Title = "Export your personal list";
-            //System.IO.FileStream stream = (System.IO.FileStream)dialog.OpenFile();
 
             if (dialog.ShowDialog() == DialogResult)
             {
@@ -152,6 +169,8 @@ namespace ComputerGameLibrary
 
         public void readOwnList(string filepath)
         {
+            // UI wird angepasst (Visibility) und es wird die Datei, auf die der FilePath verweist entschlüsselt und Instanzen von Game erstellt
+
             ButtonDelete.Visibility = Visibility.Visible;
             DataGridPersonalScore.Visibility = Visibility.Visible;
             AllListOptions.Visibility = Visibility.Collapsed;
@@ -181,6 +200,8 @@ namespace ComputerGameLibrary
         }
         void readList()
         {
+            // UI wird angepasst (Visibility) und die Liste aller Spiele wird geladen
+
             ButtonDelete.Visibility = Visibility.Hidden;
             DataGridPersonalScore.Visibility = Visibility.Collapsed;
             AddGamePanel.Visibility = Visibility.Visible;
@@ -201,6 +222,8 @@ namespace ComputerGameLibrary
         }
         void LoadFilters()
         {
+            // Je nach Eigenschaften der Games wird die Combobox im Filter angepasst
+
             List<string> genreList = new List<string>();
             List<string> platformList = new List<string>();
             platformList.Add("");
@@ -222,6 +245,8 @@ namespace ComputerGameLibrary
         }
         public Game LineToGame(string str)
         {
+            // Generelle Methode um eine Zeile in denen ein Game codiert ist zu lesen
+
             var temp = str.Replace("\"", "");
             string[] line = temp.Split(',');
 
@@ -247,8 +272,9 @@ namespace ComputerGameLibrary
 
         private void OnClickDelete(object sender, RoutedEventArgs e)
         {
+            //Eintrag der eigenen Liste wird entfernt
+
             var readList = File.ReadAllLines(OwnListSource).ToList();
-            //List<string> writeList = new List<string>;
 
             readList.RemoveAt(DataGrid.SelectedIndex*2);
             readList.RemoveAt(DataGrid.SelectedIndex*2);
@@ -258,7 +284,7 @@ namespace ComputerGameLibrary
 
             if (DataGrid != null)
             {
-                DataGrid.SelectedIndex = 0;
+                DataGrid.SelectedIndex = -1;
             }
         }
 
