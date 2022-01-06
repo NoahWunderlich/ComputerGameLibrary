@@ -98,19 +98,10 @@ namespace ComputerGameLibrary
         
     }
 
-        private void OnClickAddReview(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void OnTextBoxContains(object sender, TextChangedEventArgs e)
-        {
-
-        }
 
         private void ClearFilter(object sender, RoutedEventArgs e)
         {
-
+            readList();
         }
 
         private void AddNewGame(object sender, RoutedEventArgs e)
@@ -138,7 +129,7 @@ namespace ComputerGameLibrary
             {
                 arr[0] = game.RawLine;
                 arr[1] = TextBoxOwnReview.Text + "," + TextBoxOwnScore.Text;
-                File.AppendAllLines(AllListSource, arr);
+                File.AppendAllLines(OwnListSource, arr);
             }
 
         }
@@ -161,6 +152,7 @@ namespace ComputerGameLibrary
 
         public void readOwnList(string filepath)
         {
+            ButtonDelete.Visibility = Visibility.Visible;
             DataGridPersonalScore.Visibility = Visibility.Visible;
             AllListOptions.Visibility = Visibility.Collapsed;
             AddGamePanel.Visibility = Visibility.Hidden;
@@ -189,6 +181,7 @@ namespace ComputerGameLibrary
         }
         void readList()
         {
+            ButtonDelete.Visibility = Visibility.Hidden;
             DataGridPersonalScore.Visibility = Visibility.Collapsed;
             AddGamePanel.Visibility = Visibility.Visible;
             OwnListOptions.Visibility = Visibility.Collapsed;
@@ -252,9 +245,22 @@ namespace ComputerGameLibrary
             return game;
         }
 
-        private void ScrollViewer_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
+        private void OnClickDelete(object sender, RoutedEventArgs e)
         {
+            var readList = File.ReadAllLines(OwnListSource).ToList();
+            //List<string> writeList = new List<string>;
 
+            readList.RemoveAt(DataGrid.SelectedIndex*2);
+            readList.RemoveAt(DataGrid.SelectedIndex*2);
+
+            File.WriteAllLines(OwnListSource, readList);
+            readOwnList(OwnListSource);
+
+            if (DataGrid != null)
+            {
+                DataGrid.SelectedIndex = 0;
+            }
         }
+
     }
 }
